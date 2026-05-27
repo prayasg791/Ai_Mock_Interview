@@ -106,7 +106,7 @@ await axios.post(
     "https://ai-mock-interview-5mmv.onrender.com/api/history/save",
     {
         userId:
-            user.user._id,
+         user.id,
 
         roomId,
 
