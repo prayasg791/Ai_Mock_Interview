@@ -95,23 +95,28 @@ const Room = () => {
                 }
             );
             //////////////////////////
-            await axios.post(
-                "https://ai-mock-interview-5mmv.onrender.com/api/history/save",
-                {
-                    userId:
-                        JSON.parse(
-                            localStorage.getItem("user")
-                        )._id,
+const user =
+    JSON.parse(
+        localStorage.getItem("user")
+    );
 
-                    roomId,
+console.log(user);
 
-                    language,
+await axios.post(
+    "https://ai-mock-interview-5mmv.onrender.com/api/history/save",
+    {
+        userId:
+            user.user._id,
 
-                    code,
+        roomId,
 
-                    feedback: feedbackData
-                }
-            );
+        language,
+
+        code,
+
+        feedback: feedbackData
+    }
+);
             ///////////////////////////////
         } catch (error) {
             console.error("AI Feedback Error:", error);
