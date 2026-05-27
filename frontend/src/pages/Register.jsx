@@ -13,7 +13,7 @@ const Register = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post("http://localhost:3000/api/auth/register", {
+            const response = await axios.post("https://ai-mock-interview-5mmv.onrender.com/api/auth/register", {
                 username,
                 email,
                 password

@@ -71,7 +71,7 @@ const Room = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                "http://localhost:3000/api/ai/feedback",
+                "https://ai-mock-interview-5mmv.onrender.com/api/ai/feedback",
                 {
                     language,
                     code
@@ -127,7 +127,7 @@ const Room = () => {
 
             const response =
                 await axios.post(
-                    "http://localhost:3000/api/code/execute",
+                    "https://ai-mock-interview-5mmv.onrender.com/api/code/execute",
                     {
                         language,
                         code

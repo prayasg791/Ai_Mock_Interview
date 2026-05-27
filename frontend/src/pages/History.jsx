@@ -20,7 +20,7 @@ const History = () => {
 
                 const response =
                     await axios.get(
-                        `http://localhost:3000/api/history/all/${user._id}`
+                        `https://ai-mock-interview-5mmv.onrender.com/api/history/all/${user._id}`
                     );
 
                 setInterviews(

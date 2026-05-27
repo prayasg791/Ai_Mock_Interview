@@ -14,7 +14,7 @@ const Dashboard = () => {
                 localStorage.getItem("token");
 
             await axios.get(
-                "http://localhost:3000/api/auth/logout",
+                "https://ai-mock-interview-5mmv.onrender.com/api/auth/logout",
                 {
                     headers: {
                         Authorization:

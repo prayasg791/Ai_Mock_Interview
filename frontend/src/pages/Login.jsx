@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post("http://localhost:3000/api/auth/login", {
+            const response = await axios.post("https://ai-mock-interview-5mmv.onrender.com/api/auth/login", {
                 email,
                 password
             });
