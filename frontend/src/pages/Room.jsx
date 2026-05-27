@@ -96,7 +96,7 @@ const Room = () => {
             );
             //////////////////////////
             await axios.post(
-                "http://localhost:3000/api/history/save",
+                "https://ai-mock-interview-5mmv.onrender.com/api/history/save",
                 {
                     userId:
                         JSON.parse(
