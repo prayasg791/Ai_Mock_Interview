@@ -19,7 +19,7 @@ router.post("/save",saveInterview);
  * @access private
  */
 router.get(
-    "/all",
+    "/all/:userId",
     getInterviewHistory
 );
 

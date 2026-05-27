@@ -18,6 +18,8 @@ const Room = () => {
     // Feedback state will hold the parsed JSON object for the AIFeedback component
     const [feedback, setFeedback] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [output, setOutput] = useState("");
+    const [running, setRunning] = useState(false);
 
     useEffect(() => {
         // Join room
@@ -92,27 +94,69 @@ const Room = () => {
                     feedback: feedbackData
                 }
             );
-//////////////////////////
+            //////////////////////////
             await axios.post(
-    "http://localhost:3000/api/history/save",
-    {
-        userId: "temporary-user-id",
+                "http://localhost:3000/api/history/save",
+                {
+                    userId:
+                        JSON.parse(
+                            localStorage.getItem("user")
+                        )._id,
 
-        roomId,
+                    roomId,
 
-        language,
+                    language,
 
-        code,
+                    code,
 
-        feedback: feedbackData
-    }
-);
-///////////////////////////////
+                    feedback: feedbackData
+                }
+            );
+            ///////////////////////////////
         } catch (error) {
             console.error("AI Feedback Error:", error);
         } finally {
             setLoading(false);
         }
+    };
+    const handleRunCode = async () => {
+
+        try {
+
+            setRunning(true);
+
+            const response =
+                await axios.post(
+                    "http://localhost:3000/api/code/execute",
+                    {
+                        language,
+                        code
+                    }
+                );
+
+            setOutput(
+                response.data.output
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                "Code execution error:",
+                error
+            );
+
+            setOutput(
+                "Error running code"
+            );
+
+        }
+        finally {
+
+            setRunning(false);
+
+        }
+
     };
 
     return (
@@ -130,7 +174,18 @@ const Room = () => {
                         language={language}
                         setLanguage={setLanguage}
                     />
+                    <button
+                        onClick={handleRunCode}
+                        className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg"
+                    >
 
+                        {
+                            running
+                                ? "Running..."
+                                : "Run Code"
+                        }
+
+                    </button>
                     <button
                         onClick={generateAiFeedback}
                         disabled={loading}
@@ -145,11 +200,11 @@ const Room = () => {
             </div>
 
             {/* Main Content Split View */}
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-1 overflow-hidden gap-4 p-4 bg-[#0a0a0f]">
 
                 {/* Left Side: Code Editor */}
                 <div className="w-1/2 h-full border-r border-gray-800 flex flex-col">
-                    <div className="flex-1">
+                    <div className="flex-1 rounded-2xl overflow-hidden border border-gray-800 bg-[#111827] shadow-2xl">
                         <CodeEditor
                             code={code}
                             language={language}
@@ -157,6 +212,39 @@ const Room = () => {
                         />
                     </div>
                 </div>
+<div className="w-[420px] rounded-2xl overflow-hidden border border-gray-800 bg-[#111827] shadow-2xl flex flex-col">
+
+    {/* Output Header */}
+    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+
+        <h3 className="text-white font-semibold text-lg">
+            Output
+        </h3>
+
+        <button
+            onClick={() => setOutput("")}
+            className="text-gray-400 hover:text-white text-sm"
+        >
+            Clear
+        </button>
+
+    </div>
+
+    {/* Output Body */}
+    <div className="flex-1 overflow-auto p-4">
+
+        <pre className="text-green-400 whitespace-pre-wrap break-words">
+
+            {
+                output ||
+                "Run code to see output..."
+            }
+
+        </pre>
+
+    </div>
+
+</div>
 
                 {/* Right Side: AI Feedback Dashboard */}
                 <div className="w-1/2 h-full p-6 overflow-y-auto bg-[#12121a]">

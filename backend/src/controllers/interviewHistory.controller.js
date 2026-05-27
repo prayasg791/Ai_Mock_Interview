@@ -2,8 +2,8 @@ const InterviewHistory = require('../model/interviewHistory.model')
 
 const saveInterview = async (req, res) => {
     try {
-        const {userId,roomId,language,code,feedback}= req.body;
-        const interview =await InterviewHistory.create({userId,roomId,language,code,feedback});
+        const { userId, roomId, language, code, feedback } = req.body;
+        const interview = await InterviewHistory.create({ userId, roomId, language, code, feedback });
 
         return res.status(201).json({
             success: true,
@@ -11,7 +11,7 @@ const saveInterview = async (req, res) => {
         });
     }
     catch (error) {
- console.error(
+        console.error(
             "Save interview error:",
             error
         );
@@ -34,9 +34,14 @@ const getInterviewHistory = async (
 
     try {
 
+        const { userId } = req.params;
+
         const interviews =
-            await InterviewHistory.find()
-                .sort({ createdAt: -1 });
+            await InterviewHistory.find({
+                userId
+            }).sort({
+                createdAt: -1
+            });
 
         return res.status(200).json({
             success: true,
@@ -59,4 +64,4 @@ const getInterviewHistory = async (
     }
 
 };
-module.exports = { saveInterview,getInterviewHistory};
+module.exports = { saveInterview, getInterviewHistory };
