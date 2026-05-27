@@ -18,9 +18,15 @@ function App() {
 
   useEffect(() => {
 
-    socket.on("connect", () => {
+    const handleConnect = () => {
       console.log("Connected:", socket.id);
-    });
+    };
+
+    socket.on("connect", handleConnect);
+
+    return () => {
+      socket.off("connect", handleConnect);
+    };
 
   }, []);
 
@@ -29,7 +35,11 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<Dashboard />}
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/login"

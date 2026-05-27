@@ -6,14 +6,15 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const app = express();
-
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: [
+            "http://localhost:5173",
+            "https://ai-mock-interview-black-beta.vercel.app"
+        ],
         credentials: true
     })
 );
-
 app.use(express.json());
 
 app.use(cookieParser());
@@ -40,6 +41,6 @@ app.use("/api/code", codeExecutionRouter);
 
 app.use("/api/ai", aiRouter);
 
-app.use("/api/history",interviewHistoryRouter);
+app.use("/api/history", interviewHistoryRouter);
 
 module.exports = app;
