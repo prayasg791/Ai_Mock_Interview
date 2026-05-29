@@ -18,9 +18,11 @@ const History = () => {
                         localStorage.getItem("user")
                     );
 
+                   const userId = user._id || user.id;
+
                 const response =
                     await axios.get(
-                        `https://ai-mock-interview-5mmv.onrender.com/api/history/all/${user._id}`
+                        `https://ai-mock-interview-5mmv.onrender.com/api/history/all/${userId}`
                     );
 
                 console.log("USER:", user);
